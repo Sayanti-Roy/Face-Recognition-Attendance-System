@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>Student & Employee Attendance System</h1>
+            <div>
+                <a href="/manage" class="nav-link">Manage Users</a>
+                <a href="/reports" class="nav-link">View Reports</a>
+            </div>
+        </header>
+        <main>
+            <div class="video-container">
+                <h2>Live Camera Feed</h2>
+                <img src="{{ url_for('video_feed') }}" width="100%" alt="Video Feed">
+            </div>
+            <div class="attendance-container">
+                <h2>Today's Attendance</h2>
+                <table id="attendance-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Attendance data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // This script fetches attendance data from the Flask server and updates the table
+        async function updateAttendance() {
+            try {
+                const response = await fetch('/get_attendance');
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+                const attendanceData = await response.json();
+                const tableBody = document.querySelector('#attendance-table tbody');
+
+                // Clear existing rows
+                tableBody.innerHTML = '';
+
+                // Add new rows from the fetched data
+                if (attendanceData.length === 0) {
+                     tableBody.innerHTML = '<tr><td colspan="2">No one has checked in yet.</td></tr>';
+                } else {
+                    attendanceData.forEach(record => {
+                        const row = `<tr><td>${record.name}</td><td>${record.time}</td></tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error fetching attendance:', error);
+                const tableBody = document.querySelector('#attendance-table tbody');
+                tableBody.innerHTML = '<tr><td colspan="2">Error loading attendance.</td></tr>';
+            }
+        }
+
+        // Update the attendance list every 5 seconds
+        setInterval(updateAttendance, 5000);
+
+        // Load the attendance list for the first time when the page loads
+        document.addEventListener('DOMContentLoaded', updateAttendance);
+    </script>
+</body>
+</html>
+

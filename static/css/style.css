@@ -1,0 +1,243 @@
+/* static/css/style.css */
+
+/* --- 1. General Setup & Variables --- */
+:root {
+    --primary-color: #4a69bd;
+    --danger-color: #e74c3c;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --text-color: #34495e;
+    --light-text-color: #555;
+    --border-radius: 12px;
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--text-color);
+    min-height: 100vh;
+    padding: 2rem;
+    line-height: 1.6;
+}
+
+/* --- 2. Main Layout Containers --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+main {
+    display: grid;
+    /* Create responsive columns that are at least 450px wide */
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2rem;
+}
+
+/* --- 3. The Glassmorphism Effect --- */
+/* This style will be applied to our main content blocks */
+.main-header,
+.video-container,
+.attendance-container,
+.user-management-container,
+.form-container,
+.report-container,
+.report-controls {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+/* --- 4. Header & Navigation --- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding-bottom: 0.75rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-left: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #1a253c;
+}
+
+/* --- 5. Tables --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+}
+
+thead {
+    border-bottom: 2px solid rgba(52, 73, 94, 0.2);
+}
+
+thead th {
+    font-weight: 600;
+    color: #1a253c;
+}
+
+tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Special styles for status pills in the report */
+td[class^="status-"] {
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    text-align: center;
+    color: #fff;
+    max-width: 100px;
+}
+
+.status-present {
+    background-color: var(--success-color);
+}
+.status-absent {
+    background-color: var(--warning-color);
+}
+
+/* --- 6. Forms & Buttons --- */
+.form-container, .report-controls {
+    grid-column: 1 / -1; /* Make form containers span full width if needed */
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--light-text-color);
+}
+
+input[type="text"],
+input[type="file"],
+input[type="date"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+input[type="file"]::file-selector-button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #3b5a9a;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.btn, .btn-primary {
+    background-color: var(--primary-color);
+}
+
+.btn:hover, .btn-primary:hover {
+    background-color: #3b5a9a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-delete {
+    background-color: var(--danger-color);
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- 7. Media Queries for Responsiveness --- */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+    .main-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    main {
+        grid-template-columns: 1fr;
+    }
+}

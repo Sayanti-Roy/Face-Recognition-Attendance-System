@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>Attendance Report</h1>
+            <div>
+                <a href="/" class="nav-link">Live View</a>
+                <a href="/manage" class="nav-link">Manage Users</a>
+            </div>
+        </header>
+        <main class="report-main">
+            <div class="report-controls">
+                <form method="GET" action="/reports">
+                    <label for="report_date">Select Date:</label>
+                    <input type="date" id="report_date" name="date" value="{{ report_date }}">
+                    <button type="submit" class="btn btn-primary">Generate Report</button>
+                </form>
+            </div>
+
+            <div class="report-container">
+                <h2>Report for: {{ report_date }}</h2>
+                <table id="report-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Check-in Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if report_data %}
+                            {% for record in report_data %}
+                            <tr>
+                                <td>{{ record.name }}</td>
+                                <td>{{ record.role }}</td>
+                                <td class="status-{{ record.status | lower }}">{{ record.status }}</td>
+                                <td>{{ record.timestamp if record.timestamp else 'N/A' }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4">No users found. Please add users first.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

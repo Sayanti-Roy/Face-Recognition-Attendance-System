@@ -1,0 +1,8 @@
+opencv-contrib-python
+Flask
+mysql-connector-python
+numpy
+Pillow
+werkzeug
+requests
+scipy
